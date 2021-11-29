@@ -3,13 +3,20 @@ PROJECT(typelist)
 
 SET(CMAKE_CXX_STANDARD 14)
 
+
+# INTERFACE LIBRARY TARGET
+add_library(typelist INTERFACE)
+target_include_directories(typelist INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+# TESTS TARGET
 SET(SOURCES
     typelist.hpp
     tests.cpp)
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR})
+add_executable(run_tests ${SOURCES})
+target_link_libraries(run_tests typelist)
 
-ADD_EXECUTABLE(run_tests ${SOURCES})
 
 ADD_CUSTOM_TARGET(format
     COMMAND clang-format -style=file -i ${SOURCES}
